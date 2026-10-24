@@ -108,6 +108,13 @@
     .result-score span { font-size: 22px; color: var(--muted); letter-spacing: 0; }
     .result-message { color: var(--muted); font-size: 14px; max-width: 350px; margin: 18px auto 24px; }
     .result-summary { padding: 16px; margin-bottom: 24px; background: var(--soft); border-radius: 10px; color: var(--accent); font-size: 13px; }
+    .result-summary h3 { margin: 0 0 12px; font-size: 17px; }
+    .result-summary p { margin: 8px 0; overflow-wrap: anywhere; }
+    .report-note, .copy-status { color: var(--muted); font-size: 12px; }
+    .result-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .manual-copy { margin-top: 16px; text-align: left; }
+    .manual-copy label { display: block; font-size: 13px; }
+    .manual-copy textarea { width: 100%; min-height: 150px; padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; font-size: 13px; }
     footer { display: flex; justify-content: space-between; gap: 18px; padding: 22px 0 30px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
     @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
@@ -223,8 +230,23 @@
             <h2 id="result-title" tabindex="-1"></h2>
             <p class="result-score" id="result-score"></p>
             <p class="result-message" id="result-message"></p>
-            <div class="result-summary" id="result-summary"></div>
-            <button class="primary" id="restart" type="button">다시 탐사하기 <span aria-hidden="true">↻</span></button>
+            <section class="result-summary" aria-labelledby="report-title">
+              <h3 id="report-title">미션 리포트</h3>
+              <p id="report-score"></p>
+              <p id="result-summary"></p>
+              <p id="report-rank"></p>
+              <p id="report-slowest"></p>
+              <p class="report-note">소요 시간은 문항 표시부터 첫 답변까지이며, 해설을 읽는 시간은 제외해요. 동률이면 먼저 푼 문항을 표시해요.</p>
+            </section>
+            <div class="result-actions">
+              <button class="primary" id="copy-report" type="button">미션 리포트 복사</button>
+              <button class="primary" id="restart" type="button">다시 탐사하기 <span aria-hidden="true">↻</span></button>
+            </div>
+            <p class="copy-status" id="copy-status" role="status" aria-live="polite" aria-atomic="true"></p>
+            <div class="manual-copy" id="manual-copy" hidden>
+              <label for="report-text">복사할 미션 리포트</label>
+              <textarea id="report-text" readonly></textarea>
+            </div>
           </div>
         </section>
       </div>
@@ -251,6 +273,9 @@
     let correct = 0;
     let answered = false;
     let scoreAnimation = 0;
+    let questionStarted = 0;
+    let durations = [];
+    let reportText = "";
 
     // Fisher–Yates shuffle of question order only; options and answer indexes stay untouched.
     function shuffleQuestions() {
@@ -290,11 +315,13 @@
         el("answers").append(button);
       });
       if (moveFocus) el("question").focus();
+      questionStarted = performance.now();
     }
 
     function chooseAnswer(selected) {
       if (answered) return;
       answered = true;
+      durations[current] = performance.now() - questionStarted;
       const item = order[current];
       const isCorrect = selected === item.answer;
       if (isCorrect) correct++;
@@ -328,12 +355,12 @@
       el("result").hidden = false;
       el("step").textContent = "탐사 완료 · 10 / 10";
       const level = correct === 10
-        ? { emoji: "🏆🚀🌟", title: "당신은 우주 탐사 마스터!", message: "모든 미션을 완벽하게 해냈어요. 당신의 우주 지식은 이미 궤도에 올랐네요!" }
+        ? { emoji: "🏆🚀🌟", rank: "우주 탐사 마스터", title: "당신은 우주 탐사 마스터!", message: "모든 미션을 완벽하게 해냈어요. 당신의 우주 지식은 이미 궤도에 올랐네요!" }
         : correct >= 7
-        ? { emoji: "🚀🪐✨", title: "훌륭한 우주 탐사대원!", message: "별 너머의 세상을 꽤 잘 알고 있네요. 조금만 더 탐험하면 우주 마스터가 될 수 있어요." }
+        ? { emoji: "🚀🪐✨", rank: "우주 탐사대원", title: "훌륭한 우주 탐사대원!", message: "별 너머의 세상을 꽤 잘 알고 있네요. 조금만 더 탐험하면 우주 마스터가 될 수 있어요." }
         : correct >= 4
-        ? { emoji: "🧑‍🚀🌙👏", title: "가능성 가득한 우주 탐험가!", message: "새로운 발견을 차곡차곡 쌓았어요. 오늘 알게 된 사실들과 함께 다음 탐사를 떠나보세요." }
-        : { emoji: "🌱🔭💫", title: "첫 탐사를 마친 당신, 멋져요!", message: "모든 탐험은 작은 호기심에서 시작돼요. 점수보다 중요한 건 오늘 새롭게 발견한 우주예요." };
+        ? { emoji: "🧑‍🚀🌙👏", rank: "우주 탐험가", title: "가능성 가득한 우주 탐험가!", message: "새로운 발견을 차곡차곡 쌓았어요. 오늘 알게 된 사실들과 함께 다음 탐사를 떠나보세요." }
+        : { emoji: "🌱🔭💫", rank: "새싹 탐사대원", title: "첫 탐사를 마친 당신, 멋져요!", message: "모든 탐험은 작은 호기심에서 시작돼요. 점수보다 중요한 건 오늘 새롭게 발견한 우주예요." };
       el("result-emoji").textContent = level.emoji;
       el("result-title").textContent = level.title;
       el("result-message").textContent = level.message;
@@ -351,8 +378,47 @@
         scoreAnimation = requestAnimationFrame(animateScore);
       }
       el("result-summary").textContent = `10문항 중 ${correct}문항 정답 · 정답률 ${correct * 10}%`;
+      el("report-score").textContent = `점수 ${correct * 10} / 100점`;
+      el("report-rank").textContent = `등급 칭호: ${level.rank}`;
+      let slowest = -1;
+      durations.forEach((duration, index) => {
+        if (slowest === -1 || duration > durations[slowest]) slowest = index;
+      });
+      el("report-slowest").textContent = slowest === -1
+        ? "가장 오래 걸린 문항: 기록 없음"
+        : `가장 오래 걸린 문항: ${slowest + 1}번 · ${order[slowest].question} (${(durations[slowest] / 1000).toFixed(1)}초)`;
+      reportText = ["ORBIT 미션 리포트", el("report-score").textContent, el("result-summary").textContent,
+        el("report-rank").textContent, el("report-slowest").textContent].join("\n");
+      el("copy-status").textContent = "";
+      el("manual-copy").hidden = true;
+      el("report-text").value = reportText;
       el("result-title").focus();
     }
+
+    el("copy-report").addEventListener("click", async () => {
+      const text = reportText;
+      el("copy-status").textContent = "";
+      try {
+        await navigator.clipboard.writeText(text);
+        if (reportText !== text) return;
+        el("manual-copy").hidden = true;
+        el("copy-status").textContent = "미션 리포트를 복사했어요.";
+      } catch {
+        if (reportText !== text) return;
+        el("manual-copy").hidden = false;
+        el("report-text").focus();
+        el("report-text").select();
+        let copied = false;
+        try { copied = document.execCommand("copy"); } catch {}
+        if (copied) {
+          el("manual-copy").hidden = true;
+          el("copy-report").focus();
+          el("copy-status").textContent = "미션 리포트를 복사했어요.";
+        } else {
+          el("copy-status").textContent = "자동 복사를 사용할 수 없어요. 선택된 리포트를 Ctrl+C (Mac: ⌘C)로 복사해 주세요.";
+        }
+      }
+    });
 
     el("next").addEventListener("click", () => {
       if (!answered) return;
@@ -364,6 +430,11 @@
       order = shuffleQuestions();
       current = 0;
       correct = 0;
+      durations = [];
+      reportText = "";
+      el("report-text").value = "";
+      el("copy-status").textContent = "";
+      el("manual-copy").hidden = true;
       el("score").textContent = "0";
       el("progress").value = 0;
       el("progress").textContent = "0 / 10";
