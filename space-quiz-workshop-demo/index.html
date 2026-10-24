@@ -235,16 +235,16 @@
   <script>
     "use strict";
     const questions = [
-      { category: "01 / SOLAR SYSTEM", question: "태양계에서 가장 큰 행성은 무엇일까요?", options: ["지구", "목성", "토성", "해왕성"], answer: 1, explanation: "목성은 태양계에서 가장 큰 행성입니다. 부피로는 지구가 약 1,300개나 들어갈 수 있어요." },
-      { category: "02 / THE MOON", question: "인류가 처음 달에 발을 디딘 해는 언제일까요?", options: ["1957년", "1965년", "1969년", "1972년"], answer: 2, explanation: "1969년 아폴로 11호의 닐 암스트롱과 버즈 올드린이 달 표면에 착륙했습니다." },
-      { category: "03 / RED PLANET", question: "화성이 붉게 보이는 주된 이유는 무엇일까요?", options: ["표면의 산화철", "뜨겁게 흐르는 용암", "붉은색 대기", "태양빛과의 거리"], answer: 0, explanation: "화성의 표면과 먼지에 있는 산화철, 즉 녹 성분 때문에 붉게 보입니다." },
-      { category: "04 / OUR STAR", question: "태양이 에너지를 만들어 내는 주된 과정은 무엇일까요?", options: ["석탄의 연소", "핵분열", "전기 방전", "핵융합"], answer: 3, explanation: "태양 중심에서는 수소 원자핵이 융합해 헬륨이 되면서 막대한 에너지를 내보냅니다." },
-      { category: "05 / COSMIC DISTANCE", question: "우주에서 사용하는 ‘광년’은 무엇의 단위일까요?", options: ["시간", "거리", "밝기", "질량"], answer: 1, explanation: "광년은 빛이 진공에서 1년 동안 이동하는 거리입니다. 약 9조 4,600억 km에 해당해요." },
-      { category: "06 / RINGED WORLD", question: "크고 뚜렷한 고리로 가장 유명한 행성은 무엇일까요?", options: ["수성", "금성", "토성", "화성"], answer: 2, explanation: "토성의 고리는 수많은 얼음과 암석 조각으로 이루어져 있습니다. 목성·천왕성·해왕성에도 고리가 있어요." },
-      { category: "07 / OUR GALAXY", question: "태양계가 속한 은하의 이름은 무엇일까요?", options: ["우리은하", "안드로메다은하", "삼각형자리은하", "솜브레로은하"], answer: 0, explanation: "태양계는 우리은하에 속해 있습니다. 밤하늘의 은하수는 우리은하의 별들이 띠처럼 보이는 모습이에요." },
-      { category: "08 / SPACE EXPLORATION", question: "인류 최초의 인공위성은 무엇일까요?", options: ["보이저 1호", "아폴로 11호", "허블 우주망원경", "스푸트니크 1호"], answer: 3, explanation: "1957년 발사된 스푸트니크 1호는 지구 궤도를 돈 최초의 인공위성으로, 우주 시대의 시작을 알렸습니다." },
-      { category: "09 / LIFE IN ORBIT", question: "우주정거장의 우주비행사가 둥둥 떠다니는 이유는 무엇일까요?", options: ["지구의 중력이 전혀 없어서", "정거장과 함께 계속 자유 낙하해서", "우주복이 몸을 들어 올려서", "공기가 몸을 밀어 올려서"], answer: 1, explanation: "우주정거장에도 지구 중력이 작용합니다. 정거장과 우주비행사가 함께 지구 주위를 자유 낙하하기 때문에 무중량 상태처럼 느껴져요." },
-      { category: "10 / DEEP SPACE", question: "블랙홀의 ‘사건의 지평선’ 안쪽에서 빠져나올 수 없는 것은 무엇일까요?", options: ["빛만 빠져나올 수 있어요", "소리만 빠져나올 수 있어요", "빛을 포함한 어떤 신호도 나올 수 없어요", "우주선만 빠져나올 수 있어요"], answer: 2, explanation: "사건의 지평선은 안쪽에서 보낸 빛조차 바깥으로 도달할 수 없는 경계입니다. 그래서 블랙홀 내부를 직접 볼 수 없어요." }
+      { category: "SOLAR SYSTEM", question: "태양계에서 가장 큰 행성은 무엇일까요?", options: ["지구", "목성", "토성", "해왕성"], answer: 1, explanation: "목성은 태양계에서 가장 큰 행성입니다. 부피로는 지구가 약 1,300개나 들어갈 수 있어요." },
+      { category: "THE MOON", question: "인류가 처음 달에 발을 디딘 해는 언제일까요?", options: ["1957년", "1965년", "1969년", "1972년"], answer: 2, explanation: "1969년 아폴로 11호의 닐 암스트롱과 버즈 올드린이 달 표면에 착륙했습니다." },
+      { category: "RED PLANET", question: "화성이 붉게 보이는 주된 이유는 무엇일까요?", options: ["표면의 산화철", "뜨겁게 흐르는 용암", "붉은색 대기", "태양빛과의 거리"], answer: 0, explanation: "화성의 표면과 먼지에 있는 산화철, 즉 녹 성분 때문에 붉게 보입니다." },
+      { category: "OUR STAR", question: "태양이 에너지를 만들어 내는 주된 과정은 무엇일까요?", options: ["석탄의 연소", "핵분열", "전기 방전", "핵융합"], answer: 3, explanation: "태양 중심에서는 수소 원자핵이 융합해 헬륨이 되면서 막대한 에너지를 내보냅니다." },
+      { category: "COSMIC DISTANCE", question: "우주에서 사용하는 ‘광년’은 무엇의 단위일까요?", options: ["시간", "거리", "밝기", "질량"], answer: 1, explanation: "광년은 빛이 진공에서 1년 동안 이동하는 거리입니다. 약 9조 4,600억 km에 해당해요." },
+      { category: "RINGED WORLD", question: "크고 뚜렷한 고리로 가장 유명한 행성은 무엇일까요?", options: ["수성", "금성", "토성", "화성"], answer: 2, explanation: "토성의 고리는 수많은 얼음과 암석 조각으로 이루어져 있습니다. 목성·천왕성·해왕성에도 고리가 있어요." },
+      { category: "OUR GALAXY", question: "태양계가 속한 은하의 이름은 무엇일까요?", options: ["우리은하", "안드로메다은하", "삼각형자리은하", "솜브레로은하"], answer: 0, explanation: "태양계는 우리은하에 속해 있습니다. 밤하늘의 은하수는 우리은하의 별들이 띠처럼 보이는 모습이에요." },
+      { category: "SPACE EXPLORATION", question: "인류 최초의 인공위성은 무엇일까요?", options: ["보이저 1호", "아폴로 11호", "허블 우주망원경", "스푸트니크 1호"], answer: 3, explanation: "1957년 발사된 스푸트니크 1호는 지구 궤도를 돈 최초의 인공위성으로, 우주 시대의 시작을 알렸습니다." },
+      { category: "LIFE IN ORBIT", question: "우주정거장의 우주비행사가 둥둥 떠다니는 이유는 무엇일까요?", options: ["지구의 중력이 전혀 없어서", "정거장과 함께 계속 자유 낙하해서", "우주복이 몸을 들어 올려서", "공기가 몸을 밀어 올려서"], answer: 1, explanation: "우주정거장에도 지구 중력이 작용합니다. 정거장과 우주비행사가 함께 지구 주위를 자유 낙하하기 때문에 무중량 상태처럼 느껴져요." },
+      { category: "DEEP SPACE", question: "블랙홀의 ‘사건의 지평선’ 안쪽에서 빠져나올 수 없는 것은 무엇일까요?", options: ["빛만 빠져나올 수 있어요", "소리만 빠져나올 수 있어요", "빛을 포함한 어떤 신호도 나올 수 없어요", "우주선만 빠져나올 수 있어요"], answer: 2, explanation: "사건의 지평선은 안쪽에서 보낸 빛조차 바깥으로 도달할 수 없는 경계입니다. 그래서 블랙홀 내부를 직접 볼 수 없어요." }
     ];
     const el = id => document.getElementById(id);
     let current = 0;
@@ -252,16 +252,27 @@
     let answered = false;
     let scoreAnimation = 0;
 
+    // Fisher–Yates shuffle of question order only; options and answer indexes stay untouched.
+    function shuffleQuestions() {
+      const copy = [...questions];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+    let order = shuffleQuestions();
+
     function renderQuestion(moveFocus = false) {
       answered = false;
-      const item = questions[current];
-      el("step").innerHTML = `질문 <strong>${String(current + 1).padStart(2, "0")}</strong> / ${questions.length}`;
-      el("category").textContent = item.category;
+      const item = order[current];
+      el("step").innerHTML = `질문 <strong>${String(current + 1).padStart(2, "0")}</strong> / ${order.length}`;
+      el("category").textContent = `${String(current + 1).padStart(2, "0")} / ${item.category}`;
       el("question").textContent = item.question;
       el("feedback").className = "";
       el("feedback").replaceChildren();
       el("next").disabled = true;
-      el("next").innerHTML = current === questions.length - 1 ? '결과 보기 <span aria-hidden="true">↗</span>' : '다음 질문 <span aria-hidden="true">↗</span>';
+      el("next").innerHTML = current === order.length - 1 ? '결과 보기 <span aria-hidden="true">↗</span>' : '다음 질문 <span aria-hidden="true">↗</span>';
       el("answers").replaceChildren();
       item.options.forEach((text, index) => {
         const button = document.createElement("button");
@@ -284,7 +295,7 @@
     function chooseAnswer(selected) {
       if (answered) return;
       answered = true;
-      const item = questions[current];
+      const item = order[current];
       const isCorrect = selected === item.answer;
       if (isCorrect) correct++;
       const buttons = [...el("answers").children];
@@ -302,7 +313,7 @@
       });
       el("score").textContent = correct * 10;
       el("progress").value = current + 1;
-      el("progress").textContent = `${current + 1} / ${questions.length}`;
+      el("progress").textContent = `${current + 1} / ${order.length}`;
       el("feedback").className = `feedback ${isCorrect ? "good" : "bad"}`;
       const heading = document.createElement("strong");
       heading.textContent = isCorrect ? "정답이에요! 멋진 발견이에요. ✨" : `아쉬워요! 정답은 ‘${item.options[item.answer]}’입니다.`;
@@ -345,11 +356,12 @@
 
     el("next").addEventListener("click", () => {
       if (!answered) return;
-      if (current === questions.length - 1) showResult();
+      if (current === order.length - 1) showResult();
       else { current++; renderQuestion(true); }
     });
     el("restart").addEventListener("click", () => {
       cancelAnimationFrame(scoreAnimation);
+      order = shuffleQuestions();
       current = 0;
       correct = 0;
       el("score").textContent = "0";
