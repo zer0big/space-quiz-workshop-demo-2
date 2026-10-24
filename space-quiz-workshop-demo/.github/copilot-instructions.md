@@ -14,7 +14,7 @@ Start-Process .\index.html
 
 ## Application structure
 
-The inline script owns a fixed ten-question sequence. Each `questions` entry has `category`, `question`, four `options`, a zero-based `answer` index, and `explanation`. Scoring is ten points per correct answer, up to 100; several labels, the progress maximum, and result thresholds also assume ten questions.
+The inline script owns a fixed set of ten questions, shuffled into a new order (Fisher–Yates `order` array) on page load and on restart. Each `questions` entry has `category` (no number prefix; the displayed number is the position in the shuffled order), four `options`, a zero-based `answer` index, and `explanation`. Only question order is shuffled, never options or `answer`. Scoring is ten points per correct answer, up to 100; several labels, the progress maximum, and result thresholds also assume ten questions.
 
 State is held in `current`, `correct`, `answered`, and `scoreAnimation`. `renderQuestion()` creates the answer buttons; `chooseAnswer()` locks the current answer, updates score and progress, and reveals the explanation. Navigation is explicit through the next button, not automatic. `showResult()` swaps the question/result panels using `hidden`. Restart cancels the score animation, clears state and counters, and renders the first question.
 
